@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const connection = require('./event_db'); // 导入数据库连接
+const connection = require('./event_db'); 
 
 const app = express();
 const port = 3000;
 
-// 中间件
+
 app.use(cors());
 app.use(express.json());
 

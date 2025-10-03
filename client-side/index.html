@@ -26,7 +26,7 @@
                 <h2 style="color: white; margin-bottom: 20px;">Contact Us</h2>
                 <p>📧 Email: contact@l.tian.13@student.scu.edu.au</p>
                 <p>📞 Phone: +1 (800) 123-4567</p>
-                <p>📍 Address: 123 Charity Street, New York, NY 10001</p>
+                <p>📍 Address: 123 Charity Street, ChinaTown,CT 10001</p>
             </div>
         </div>
 
@@ -51,6 +51,7 @@
                     eventList.innerHTML = '<div class="no-results">No upcoming events</div>';
                     return;
                 }
+                
                 
                 eventList.innerHTML = events.map(event => `
                     <div class="event-card" onclick="window.location.href='event-details.html?id=${event.id}'">
