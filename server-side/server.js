@@ -87,7 +87,24 @@ app.get('/api/events/:id', (req, res) => {
     res.json(results[0]);
   });
 });
+const path = require('path'); // 👈 确保顶部已引入 path 模块
 
+// 托管静态文件（HTML/CSS/JS）
+app.use(express.static(path.join(__dirname, '..', 'client-side')));
+
+// 当访问根路径时，返回 index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client-side', 'index.html'));
+});
+
+// 可选：为其他页面也设置路由（避免 404）
+app.get('/search.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client-side', 'search.html'));
+});
+
+app.get('/event-details.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client-side', 'event-details.html'));
+});
 // 启动服务器
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

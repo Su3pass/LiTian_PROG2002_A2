@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - Charity Events</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search Events</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div id="event-details">
+                <div class="loading">Loading...</div>
+            </div>
+            <button class="register-btn" id="register-btn">Register Now</button>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id');
+
+        if (!eventId) {
+            document.getElementById('event-details').innerHTML = '<div class="no-results">Event ID not specified</div>';
+            document.getElementById('register-btn').style.display = 'none';
+        } else {
+            loadEventDetails(eventId);
+        }
+
+        async function loadEventDetails(eventId) {
+            const details = document.getElementById('event-details');
+            details.innerHTML = '<div class="loading">Loading...</div>';
+            
+            try {
+                const response = await fetch(`/api/events/${eventId}`);
+                const event = await response.json();
+                
+                details.innerHTML = `
+                    <h2>${event.name}</h2>
+                    <p><strong>📅 Date:</strong> ${new Date(event.date).toLocaleString()}</p>
+                    <p><strong>📍 Location:</strong> ${event.location}</p>
+                    <p><strong>🏷️ Category:</strong> ${event.category_name}</p>
+                    <p><strong>💰 Ticket Price:</strong> $${event.ticket_price}</p>
+                    <p><strong>🎯 Fundraising Goal:</strong> $${event.goal_amount}</p>
+                    <p><strong>✅ Amount Raised:</strong> $${event.current_amount}</p>
+                    <p><strong>📝 Description:</strong> ${event.description || 'No description available'}</p>
+                `;
+            } catch (error) {
+                details.innerHTML = '<div class="no-results">Failed to load event details</div>';
+            }
+        }
+
+        document.getElementById('register-btn').addEventListener('click', () => {
+            alert('Registration feature coming soon!');
+        });
+    </script>
+</body>
+</html>
